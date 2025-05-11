@@ -1,0 +1,514 @@
+:root {
+    --safe-area-inset-top: env(safe-area-inset-top, 0px);
+    --safe-area-inset-right: env(safe-area-inset-right, 0px);
+    --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-area-inset-left: env(safe-area-inset-left, 0px);
+}
+
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    background-color: #090e17;
+    overflow: hidden;
+    touch-action: manipulation;
+    color: #fff;
+}
+
+/* Game Container */
+#game-container {
+    position: fixed; /* Changed from relative to fixed */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    /* Account for safe areas */
+    height: calc(100% - env(safe-area-inset-bottom));
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #090e17;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(26, 188, 156, 0.1) 0%, transparent 30%),
+        radial-gradient(circle at 90% 80%, rgba(41, 128, 185, 0.1) 0%, transparent 30%),
+        linear-gradient(to bottom, #090e17, #121f36);
+    /* Add safe area insets */
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+}
+
+.hidden {
+    display: none;
+}
+
+/* Start Screen */
+.logo-container {
+    margin-top: 40px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.logo-placeholder {
+    width: 200px;
+    height: 80px;
+    margin: 0 auto;
+    background-color: #22313f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    color: #3498db;
+    font-weight: bold;
+    border: 2px solid #3498db;
+    box-shadow: 0 0 15px rgba(52, 152, 219, 0.5);
+}
+
+h1 {
+    font-size: 36px;
+    color: #00ffcc;
+    text-shadow: 0 0 10px rgba(0, 255, 204, 0.7);
+    letter-spacing: 2px;
+    margin-top: 10px;
+}
+
+.glow-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 20px 0;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.8);
+    transition: all 0.2s ease;
+    letter-spacing: 1px;
+}
+
+.glow-button:active {
+    transform: scale(0.95);
+    box-shadow: 0 0 20px rgba(52, 152, 219, 1);
+}
+
+.instructions {
+    width: 100%;
+    max-width: 500px;
+    background-color: rgba(24, 44, 74, 0.6);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.instructions h2 {
+    color: #00ffcc;
+    margin-bottom: 15px;
+    font-size: 22px;
+    text-align: center;
+}
+
+.instructions h3 {
+    color: #3498db;
+    margin: 20px 0 10px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.instructions p {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.legend {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.threat-example {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.ransomware {
+    background-color: #e74c3c;
+    box-shadow: 0 0 10px rgba(231, 76, 60, 0.8);
+}
+
+.phishing {
+    background-color: #3498db;
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.8);
+}
+
+.exploit {
+    background-color: #f1c40f;
+    box-shadow: 0 0 10px rgba(241, 196, 15, 0.8);
+}
+
+.botnet {
+    background-color: #2ecc71;
+    box-shadow: 0 0 10px rgba(46, 204, 113, 0.8);
+}
+
+.false-alarm {
+    background-color: #95a5a6;
+    box-shadow: 0 0 10px rgba(149, 165, 166, 0.8);
+}
+
+/* Game Screen */
+#top-bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+#score {
+    color: #00ffcc;
+}
+
+#timer {
+    color: #e74c3c;
+}
+
+#game-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 140px);
+    overflow: hidden;
+}
+
+.threat {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 12px;
+    color: white;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+}
+
+.threat.ransomware {
+    background-color: #e74c3c;
+    box-shadow: 0 0 15px rgba(231, 76, 60, 0.8);
+}
+
+.threat.phishing {
+    background-color: #3498db;
+    box-shadow: 0 0 15px rgba(52, 152, 219, 0.8);
+}
+
+.threat.exploit {
+    background-color: #f1c40f;
+    box-shadow: 0 0 15px rgba(241, 196, 15, 0.8);
+}
+
+.threat.botnet {
+    background-color: #2ecc71;
+    box-shadow: 0 0 15px rgba(46, 204, 113, 0.8);
+}
+
+.threat.false-alarm {
+    background-color: #95a5a6;
+    box-shadow: 0 0 15px rgba(149, 165, 166, 0.8);
+}
+
+.threat.neutralized {
+    transform: scale(1.5);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+#breach-meter-container {
+    position: absolute;
+    bottom: calc(90px + env(safe-area-inset-bottom));
+    left: 0;
+    width: 100%;
+    padding: 0 20px;
+}
+
+#breach-meter-label {
+    text-align: center;
+    font-size: 12px;
+    margin-bottom: 5px;
+    color: #e74c3c;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+#breach-meter {
+    width: 100%;
+    height: 15px;
+    background-color: rgba(24, 44, 74, 0.6);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #2c3e50;
+}
+
+#breach-meter-fill {
+    height: 100%;
+    width: 0%;
+    background-color: #e74c3c;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 10px rgba(231, 76, 60, 0.8);
+}
+
+#tools-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgba(24, 44, 74, 0.8);
+    border-top: 2px solid #2c3e50;
+    padding: 5px 10px;
+}
+
+.tool {
+    width: 22%;
+    height: 60px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    text-align: center;
+    padding: 5px;
+    color: white;
+    font-weight: bold;
+    background-color: #22313f;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.tool-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.tool[data-tool="threat-intel"] {
+    border-color: #e74c3c;
+}
+
+.tool[data-tool="secure-access"] {
+    border-color: #3498db;
+}
+
+.tool[data-tool="vuln-scanner"] {
+    border-color: #f1c40f;
+}
+
+.tool[data-tool="honeypot"] {
+    border-color: #2ecc71;
+}
+
+.tool.selected {
+    transform: scale(0.95);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+.tool[data-tool="threat-intel"].selected {
+    box-shadow: 0 0 15px rgba(231, 76, 60, 0.8);
+    background-color: rgba(231, 76, 60, 0.3);
+}
+
+.tool[data-tool="secure-access"].selected {
+    box-shadow: 0 0 15px rgba(52, 152, 219, 0.8);
+    background-color: rgba(52, 152, 219, 0.3);
+}
+
+.tool[data-tool="vuln-scanner"].selected {
+    box-shadow: 0 0 15px rgba(241, 196, 15, 0.8);
+    background-color: rgba(241, 196, 15, 0.3);
+}
+
+.tool[data-tool="honeypot"].selected {
+    box-shadow: 0 0 15px rgba(46, 204, 113, 0.8);
+    background-color: rgba(46, 204, 113, 0.3);
+}
+
+/* Game Over Screen */
+#game-over-screen {
+    justify-content: center;
+}
+
+#final-score {
+    font-size: 24px;
+    margin: 20px 0;
+    color: #00ffcc;
+}
+
+#game-over-reason {
+    font-size: 18px;
+    margin-bottom: 30px;
+    color: #e74c3c;
+    text-align: center;
+}
+
+/* Special animations */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.special-threat {
+    animation: pulse 0.8s infinite;
+}
+
+.ceo-phish {
+    background-color: #9b59b6 !important;
+    box-shadow: 0 0 20px rgba(155, 89, 182, 1) !important;
+    width: 70px !important;
+    height: 70px !important;
+}
+
+.stuxnet {
+    background-color: #c0392b !important;
+    box-shadow: 0 0 20px rgba(192, 57, 43, 1) !important;
+    width: 75px !important;
+    height: 75px !important;
+}
+
+/* Combo Text */
+.combo-text {
+    position: absolute;
+    color: #fff;
+    font-weight: bold;
+    pointer-events: none;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    animation: floatUp 1s forwards;
+    z-index: 100;
+}
+
+#game-screen::before {
+    top: -2px;
+    left: 20px;
+    transform: skewX(-45deg);
+}
+
+#game-screen::after {
+    top: -2px;
+    right: 20px;
+    transform: skewX(45deg);
+}
+
+#game-screen .neon-bottom::before {
+    left: 20px;
+    transform: skewX(45deg);
+}
+
+#game-screen .neon-bottom::after {
+    right: 20px;
+    transform: skewX(-45deg);
+}
+
+/* Adjust game area to fit within borders */
+#game-area {
+    top: 4px;
+    height: calc(100% - 88px); /* Account for borders and tools */
+}
+
+/* Adjust tools container position */
+#tools-container {
+    bottom: 4px;
+}
+
+
+@keyframes floatUp {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-height: 700px) {
+    .logo-container {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    
+    h1 {
+        font-size: 30px;
+    }
+    
+    .glow-button {
+        margin: 10px 0;
+        padding: 12px 25px;
+    }
+    
+    .instructions {
+        padding: 15px;
+    }
+    
+    .instructions h2 {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 380px) {
+    .tool {
+        font-size: 10px;
+    }
+    
+    #top-bar {
+        font-size: 16px;
+    }
+    
+    h1 {
+        font-size: 28px;
+    }
+}

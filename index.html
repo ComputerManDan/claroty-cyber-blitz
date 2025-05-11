@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">    <title>Claroty Cyber Blitz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Game wrapper -->
+    <div id="game-container">
+        <!-- Start screen -->
+        <div class="arcade-screen">
+        <div id="start-screen" class="screen">
+            <div class="logo-container">
+                <img src="assets\claroty_logo.svg" alt="Claroty Logo">
+                <h1>CYBER BLITZ</h1>
+            </div>
+            <button id="start-button" class="glow-button">START GAME</button>
+            <div class="instructions">
+                <h2>HOW TO PLAY</h2>
+                <p>1. Select the correct security tool</p>
+                <p>2. Tap the falling attack to neutralize it</p>
+                <p>3. Survive for 60 seconds!</p>
+                
+                <h3>TOOLS & THREATS</h3>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="threat-example ransomware"></div>
+                        <span>Ransomware - Use Threat Intel</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="threat-example phishing"></div>
+                        <span>Phishing - Use Secure Remote Access</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="threat-example exploit"></div>
+                        <span>Zero-Day - Use Vulnerability Scanner</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="threat-example botnet"></div>
+                        <span>Botnet - Use Honeypot (can catch any threat but for fewer points)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="threat-example false-alarm"></div>
+                        <span>False Alarm - Don't click!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Game screen -->
+        <div id="game-screen" class="screen hidden">
+            <div id="top-bar">
+                <div id="score">Score: <span id="score-value">0</span></div>
+                <div id="timer">Time: <span id="timer-value">60</span></div>
+            </div>
+            
+            <div id="game-area">
+                <!-- Threats will be dynamically added here -->
+            </div>
+            
+            <div id="breach-meter-container">
+                <div id="breach-meter-label">BREACH METER</div>
+                <div id="breach-meter">
+                    <div id="breach-meter-fill"></div>
+                </div>
+            </div>
+            
+            <div id="tools-container">
+                <div class="tool" data-tool="threat-intel">
+                    <div class="tool-inner">Threat Intel</div>
+                </div>
+                <div class="tool" data-tool="secure-access">
+                    <div class="tool-inner">Secure Access</div>
+                </div>
+                <div class="tool" data-tool="vuln-scanner">
+                    <div class="tool-inner">Vuln Scanner</div>
+                </div>
+                <div class="tool" data-tool="honeypot">
+                    <div class="tool-inner">Honeypot</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game over screen -->
+        <div id="game-over-screen" class="screen hidden">
+            <h1>GAME OVER</h1>
+            <div id="final-score">Score: <span id="final-score-value">0</span></div>
+            <div id="game-over-reason"></div>
+            <button id="restart-button" class="glow-button">PLAY AGAIN</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
